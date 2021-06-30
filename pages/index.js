@@ -5,7 +5,7 @@ export default function Home() {
   const [word, setWord] = useState("")
   const [def, setDef]  = useState([])
   const clickEvent = (e) => {
-    fetch("http://localhost:3000/api/main")
+    fetch("./api/main")
     .then(response => {
       return response.json()
     })
@@ -14,6 +14,12 @@ export default function Home() {
         setDef(response.def)
     })
   } 
+  var defi = []
+  if(def != undefined){
+    defi = def.map((defin) => {
+      return <li>{defin}</li>
+    }) 
+  }
   return (
     <div className="container">
       <Head>
@@ -21,10 +27,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Random Word and Meaning Generator</h1>
-      <button id="genbut" onClick={clickEvent}>Generate Word</button>
-      <h2>{word}</h2>
-      <h2>{def}</h2>
+      <h1 className="title">Random Word and Meaning Generator</h1>
+      <button id="genbut" onClick={clickEvent} className="btn">Generate Word</button>
+      <h2 className="word">{word}</h2>
+      <h2 className="deftitle">Definitions</h2>
+      <ol className="deflist">
+        {defi.length ? defi : <h3>No definitions for this word</h3>}
+      </ol>
       <style jsx>{`
         .container {
           min-height: 100vh;
@@ -42,6 +51,30 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+        }
+
+        .word{
+          margin-top: 0;
+          font-size: 2.3em;
+          text-transform: uppercase;
+          margin-bottom: 0;
+          letter-spacing: 1.8px;
+          color: #0070f3;
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+          background-color: #efefef;
+          border-radius: 4px;
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+        }
+
+        .deftitle{
+          margin-bottom: 0;
+          font-size: 2em;
+        }
+
+        .deflist{
+          width: 50vw;
         }
 
         footer {
@@ -112,6 +145,31 @@ export default function Home() {
 
           max-width: 800px;
           margin-top: 3rem;
+        }
+
+        .btn{
+          outline: none;
+          border: none;
+          width: 40%;
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+          border-radius: 5px;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+          font-size: 1.1em;
+          font-weight: 600;
+          background-color: #0070f3;
+          color: #fff;
+          margin-top: 2rem;
+          margin-bottom: 2rem
+        }
+
+        .btn:hover,
+        .btn:focus,
+        .btn:active{
+          background-color: #000;
+          cursor: pointer;
         }
 
         .card {
